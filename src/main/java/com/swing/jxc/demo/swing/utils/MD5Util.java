@@ -1,4 +1,4 @@
-package com.jxc.swing.demo.utils;
+package com.swing.jxc.demo.swing.utils;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

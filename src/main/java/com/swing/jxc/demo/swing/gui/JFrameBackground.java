@@ -1,4 +1,4 @@
-package com.jxc.swing.demo.gui;
+package com.swing.jxc.demo.swing.gui;
 
 import java.awt.*;
 
@@ -8,13 +8,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 /**
  * @description: 边框测试
  * @author: liujun 249489478@qq.com
  * @create: 2019-07-04 13:17
  */
-public class JFrameBackground extends JFrame{
-    public JFrameBackground(){
+public class JFrameBackground extends JFrame {
+    public JFrameBackground() {
         this.setTitle("我的swing界面");
         this.setLayout(new FlowLayout());
         JPanel buttonPanel = new JPanel();

@@ -1,11 +1,12 @@
-package com.jxc.swing.demo.gui;
+package com.swing.jxc.demo.swing.gui;
 
+import com.swing.jxc.demo.swing.common.Session;
+import com.swing.jxc.demo.swing.model.UserInfo;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.*;
-import javax.swing.border.Border;
 
 /**
  * @description: 主界面
@@ -69,10 +70,10 @@ public class MainSwing extends JFrame {
         mainPanel(mainPanel);
     }
 
-    void menuPanel(JPanel pNorth){
+    void menuPanel(JPanel pNorth) {
 //        JPanel pNorth=new JPanel();
 //        pNorth.setLayout(new GridLayout(8,1));
-        pNorth.setPreferredSize(new Dimension(150,200));
+        pNorth.setPreferredSize(new Dimension(150, 200));
 //        pNorth.setBorder(BorderFactory.createLineBorder(Color.blue));
         pNorth.setBackground(Color.WHITE);
 //        JPanel pSouth=new JPanel();
@@ -80,9 +81,10 @@ public class MainSwing extends JFrame {
 //
 //        subMenuContainer.setLayout(new GridLayout(4,1));
 
-        JButton item1=new JButton("首页");              //设置按钮
-        JButton item2=new JButton("病人信息管理");
-        JButton item3=new JButton("就医档案管理");
+        JButton item1 = new JButton("机器管理");              //设置按钮
+        JButton item2 = new JButton("进货管理");
+        JButton item3 = new JButton("出货管理");
+//        System.out.println("here:"+user.toString());
 //        JButton item4=new JButton("医生信息管理");
 //        JButton item5=new JButton("科室信息管理");
 //        JButton item6=new JButton("价格管理");
@@ -104,13 +106,22 @@ public class MainSwing extends JFrame {
 //        item5.setContentAreaFilled(false);item6.setContentAreaFilled(false);
 //        item7.setContentAreaFilled(false);item8.setContentAreaFilled(false);
 
-        pNorth.add(item1); pNorth.add(item2); pNorth.add(item3);   //添加按钮
+        pNorth.add(item1);
+        pNorth.add(item2);
+        pNorth.add(item3);
+        UserInfo user = (UserInfo) Session.session.get(Session.sessionId);
+        if(user.getIsAdmin()){
+            JButton item4 = new JButton("用户管理");
+            item4.setPreferredSize(new Dimension(150, 30));
+            item4.setContentAreaFilled(false);
+            pNorth.add(item4);
+        }//添加按钮
 //        pNorth.add(item4); pNorth.add(item5); pNorth.add(item6);
 //        pNorth.add(item7);pNorth.add(item8);
 
     }
 
-    void mainPanel(JPanel mainPanel){
+    void mainPanel(JPanel mainPanel) {
 
     }
 
