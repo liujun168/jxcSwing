@@ -1,7 +1,9 @@
 package com.swing.jxc.demo.swing.gui;
 
+import com.swing.jxc.demo.swing.common.Constant;
 import com.swing.jxc.demo.swing.common.Session;
 import com.swing.jxc.demo.swing.model.UserInfo;
+import com.swing.jxc.demo.swing.utils.TablePage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,8 +61,6 @@ public class MainSwing extends JFrame {
 //        this.add(btn3, BorderLayout.WEST);
 //        this.add(btn4, BorderLayout.NORTH);
 //        this.add(btn5, BorderLayout.CENTER);
-
-
     }
 
     void initView() {
@@ -70,6 +70,10 @@ public class MainSwing extends JFrame {
         menuPanel(panel);
 //        this.add(btn1);
         this.add(mainPanel);
+        int panelWidth = width-150;
+        int panelHeight = height-150;
+        Constant.panelWidth=panelWidth;
+        Constant.panelHeight=panelHeight;
         mainPanel(mainPanel);
     }
 
@@ -84,7 +88,7 @@ public class MainSwing extends JFrame {
 //
 //        subMenuContainer.setLayout(new GridLayout(4,1));
 
-        JButton item1 = new JButton("机器管理");              //设置按钮
+        JButton item1 = new JButton("设备管理");              //设置按钮
         JButton item2 = new JButton("进货管理");
         JButton item3 = new JButton("出货管理");
 //        System.out.println("here:"+user.toString());
@@ -128,10 +132,40 @@ public class MainSwing extends JFrame {
 //        pNorth.add(item4); pNorth.add(item5); pNorth.add(item6);
 //        pNorth.add(item7);pNorth.add(item8);
 
+        //设备管理
         item1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                new BuyJFrame(mainPanel);
+                BuyJFrame buyJFrame = new BuyJFrame();
+                //重新绘图
+                mainPanel.removeAll();
+                mainPanel.repaint();
+                mainPanel.revalidate();
+                buyJFrame.initView(mainPanel);
+            }
+        });
+        //进货管理
+        item2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BuyJFrame buyJFrame = new BuyJFrame();
+                //重新绘图
+                mainPanel.removeAll();
+                mainPanel.repaint();
+                mainPanel.revalidate();
+                buyJFrame.initView(mainPanel);
+            }
+        });
+        //出库
+        item3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SellJFrame sellJFrame = new SellJFrame();
+                //重新绘图
+                mainPanel.removeAll();
+                mainPanel.repaint();
+                mainPanel.revalidate();
+                sellJFrame.initView(mainPanel);
             }
         });
 
@@ -139,8 +173,10 @@ public class MainSwing extends JFrame {
 
     void mainPanel(JPanel mainPanel) {
 //        JButton item1 = new JButton("机器管理");
-        new BuyJFrame(this);
+        BuyJFrame buyJFrame = new BuyJFrame();
+        buyJFrame.initView(mainPanel);
 //        mainPanel.add(item1);
+//        initComponent(mainPanel,new String[]{"设备","库存"});
     }
 
     public static void main(String args[]) {

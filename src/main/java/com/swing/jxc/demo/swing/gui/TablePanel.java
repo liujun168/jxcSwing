@@ -1,13 +1,16 @@
 package com.swing.jxc.demo.swing.gui;
 
+import com.swing.jxc.demo.swing.common.Constant;
 import com.swing.jxc.demo.swing.test.Student;
 import com.swing.jxc.demo.swing.test.StudentTable;
 import com.swing.jxc.demo.swing.utils.TablePage;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * @description: 表格分页
@@ -20,22 +23,56 @@ public class TablePanel extends JFrame implements ActionListener {
     private JLabel label1;
     private TablePage table;
 
-//    private JPanel mainPanel;
+    private List data =null;
+    public void initView(JPanel mainPanel, String title, String[] columnNames, List list) {
+        mainPanel.setBorder(BorderFactory.createTitledBorder(title));
+//        mainPanel.setSize(Constant.panelWidth, Constant.panelHeight);
+        data = list;
+        table = new TablePage(columnNames,list);
+        panel = new JScrollPane(table);
 
-//    public TablePanel(){
-//        super("");
-//        initComponent();
-//    }
+//        panel.setBorder(BorderFactory.createTitledBorder(title));
+//        panel.setBounds(10, 10, 470, 119);
+        int height = Constant.panelHeight -150;
+        int width = Constant.panelWidth -150;
+        System.out.println(height);
+//        panel.setBounds(10, 10, Constant.panelWidth, Constant.panelHeight);
+        panel.setBackground(Color.red);
+        previous = new JButton("上一页");
+        previous.setBounds(width, height, 75, 20);
+        next = new JButton("下一页");
+        next.setBounds(width+105, height, 75, 20);
+        add = new JButton("添加");
+        add.setBounds(width+200, height, 65, 20);
+        delete = new JButton("删除");
+        delete.setBounds(width+420-150, height, 65, 20);
 
-    public TablePanel(JFrame jFrame,String title,String[] columnNames) {
-        super(title);
-//        initTableData();
-        initComponent(jFrame,columnNames);
+        previous.addActionListener(this);
+        next.addActionListener(this);
+        add.addActionListener(this);
+        delete.addActionListener(this);
+
+        label1 = new JLabel("总共" + table.totalRowCount + "记录|当前第"
+                + table.currentPage + "页");
+        label1.setBounds(10, height, 130, 20);
+        mainPanel.add(panel);
+        mainPanel.add(previous);
+        mainPanel.add(next);
+        mainPanel.add(add);
+        mainPanel.add(delete);
+        mainPanel.add(label1);
+
+//        jFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        jFrame.setLocationRelativeTo(null);
+//        jFrame.setVisible(true);
+
+
     }
+
 
     private void initComponent(JFrame jFrame,String[] columnNames) {
         jFrame.setSize(600, 600);
-        table = new TablePage(columnNames);
+        table = new TablePage(columnNames,null);
         panel = new JScrollPane(table);
         panel.setBounds(10, 10, 470, 119);
         previous = new JButton("上一页");
@@ -111,7 +148,7 @@ public class TablePanel extends JFrame implements ActionListener {
             }
             int index = Student.students.indexOf(s);
             Student.students.remove(index);
-            table.initTable();
+            table.initTable(data);
             label1.setText("总共" + table.totalRowCount + "记录|当前第"
                     + table.currentPage + "页");
             return;
@@ -126,7 +163,7 @@ public class TablePanel extends JFrame implements ActionListener {
             }
             Student student = new Student(id + 1, "wuming" + (id + 1), "男", 22);
             Student.students.add(student);
-            table.initTable();
+            table.initTable(data);
             label1.setText("总共" + table.totalRowCount + "记录|当前第"
                     + table.currentPage + "页");
             return;
@@ -140,16 +177,16 @@ public class TablePanel extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-        JPanel mainPanel = new JPanel();
-        JFrame frame = new JFrame();
-        new TablePanel(frame,"分页",new String[]{"12","33"});
-        frame.add(mainPanel);
-
-        frame.setTitle("边界布局");
-        frame.setResizable(true);
-        frame.setSize(600, 600);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setVisible(true);
+//        JPanel mainPanel = new JPanel();
+//        JFrame frame = new JFrame();
+//        new TablePanel(frame,"分页",new String[]{"12","33"});
+//        frame.add(mainPanel);
+//
+//        frame.setTitle("边界布局");
+//        frame.setResizable(true);
+//        frame.setSize(600, 600);
+//        frame.setLocationRelativeTo(null);
+//        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        frame.setVisible(true);
     }
 }

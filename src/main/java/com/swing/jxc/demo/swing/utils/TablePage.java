@@ -6,7 +6,10 @@ package com.swing.jxc.demo.swing.utils;
  * @create: 2019-07-05 09:48
  */
 
-import com.swing.jxc.demo.swing.test.Student;
+import com.swing.jxc.demo.swing.model.Buy;
+import com.swing.jxc.demo.swing.model.Machine;
+import com.swing.jxc.demo.swing.model.Sell;
+import com.swing.jxc.demo.swing.model.UserInfo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -14,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class TablePage extends JTable {
+public class TablePage<T> extends JTable {
     // JTable表分页信息相关变量
     public int currentPage = 1;
     public int pageCount = 5;
@@ -22,16 +25,19 @@ public class TablePage extends JTable {
     public int totalRowCount = 0;
     public int column = 0;
     public int restCount;
+    public int columnNum=1;
     public Object[][] resultData;
     // JTable表信息相关变量
-    public List<Student> students = Student.students;
+//    public List<Student> students = Student.students;
+//    public List<T> datas = new ArrayList<>();
 //    public String[] columnNames = { "ID", "Name", "Sex", "Age" };
     public String[] columnNames = null;
     public DefaultTableModel model = null;
 
-    public TablePage(String[] columnNames) {
+    public TablePage(String[] columnNames,List<T> list) {
         this.columnNames = columnNames;
-        initTable();
+        this.columnNum = columnNames.length;
+        initTable(list);
     }
 
     /**
@@ -85,19 +91,53 @@ public class TablePage extends JTable {
     /**
      * 获得原始数据集
      *
-     * @param students
+     * @param values
      * @return
      */
-    public Object[][] getData(List<Student> students) {
-        if (students.size() > 0) {
-            Object[][] data = new Object[students.size()][4];
-            for (int i = 0; i < students.size(); i++) {
-                Student s = students.get(i);
-                Object[] a = { s.getId(), s.getName(), s.getSex(), s.getAge() };// 把List**的数据赋给Object数组
-                data[i] = a;// 把数组的值赋给二维数组的一行
+
+//    public Object[][] getData(List<Student> students) {
+    public Object[][] getData(List<T> values) {
+        if (values.size() > 0) {
+            Object[][] data = new Object[values.size()][columnNum];
+            for (int i = 0; i < values.size(); i++) {
+                T t = values.get(i);
+                //进货
+                if(t instanceof  Buy){
+                    Buy buy = (Buy) t;
+//                    Object[] a = { buy.getId(),buy.getModel(),buy.getAmount()};// 把List**的数据赋给Object数组
+                    Object[] a = {buy.getModel(),buy.getAmount()};// 把List**的数据赋给Object数组
+                    data[i] = a;// 把数组的值赋给二维数组的一行
+                }
+                //用户
+                if(t instanceof UserInfo){
+                    UserInfo user = (UserInfo) t;
+                    Object[] a = { user.getId(),user.getLoginName(),user.getUserName()};// 把List**的数据赋给Object数组
+                    data[i] = a;// 把数组的值赋给二维数组的一行
+                }
+                //出库
+                if(t instanceof Sell){
+                    Sell sell = (Sell) t;
+                    Object[] a = { sell.getId(),sell.getModel(),sell.getAmount()};// 把List**的数据赋给Object数组
+                    data[i] = a;// 把数组的值赋给二维数组的一行
+                }
+                //设备
+                if(t instanceof Machine){
+                    Machine machine = (Machine) t;
+                    Object[] a = { machine.getId(),machine.getName()};// 把List**的数据赋给Object数组
+                    data[i] = a;// 把数组的值赋给二维数组的一行
+                }
             }
             return data;
         }
+//        if (students.size() > 0) {
+//            Object[][] data = new Object[students.size()][4];
+//            for (int i = 0; i < students.size(); i++) {
+//                Student s = students.get(i);
+//                Object[] a = { s.getId(), s.getName(), s.getSex(), s.getAge() };// 把List**的数据赋给Object数组
+//                data[i] = a;// 把数组的值赋给二维数组的一行
+//            }
+//            return data;
+//        }
         return null;
     }
 
@@ -145,8 +185,8 @@ public class TablePage extends JTable {
     /**
      * 初始化表格数据
      */
-    public void initTable() {
-        Object[][] data = getData(students);
+    public void initTable(List<T> datas) {
+        Object[][] data = getData(datas);
         if (data != null) {
             initResultData(data);
             model = new DefaultTableModel(getPageData(), columnNames);
@@ -157,9 +197,10 @@ public class TablePage extends JTable {
             totalRowCount = 0;
         }
         this.setModel(model);
-        this.setRowHeight(20);
+        this.setRowHeight(30);
         DefaultTableCellRenderer r = new DefaultTableCellRenderer();
         r.setHorizontalAlignment(JLabel.CENTER);
+//        r.setHorizontalAlignment(JLabel.LEFT);
         setDefaultRenderer(Object.class, r);
     }
 }

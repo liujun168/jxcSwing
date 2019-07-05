@@ -1,5 +1,7 @@
 package com.swing.jxc.demo.swing.service.impl;
 
+import com.swing.jxc.demo.swing.common.PageVo;
+import com.swing.jxc.demo.swing.common.ResponseResult;
 import com.swing.jxc.demo.swing.jdbc.MyDataSource;
 import com.swing.jxc.demo.swing.model.UserInfo;
 import com.swing.jxc.demo.swing.service.UserService;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 @Service("userService")
 @Transactional
@@ -50,5 +53,25 @@ public class UserServiceImpl implements UserService {
             dataSource.backConnection(conn);
         }
         return userInfo;
+    }
+
+    @Override
+    public ResponseResult addRecord(UserInfo user) {
+        return null;
+    }
+
+    @Override
+    public ResponseResult updateRecord(UserInfo user) {
+        return null;
+    }
+
+    @Override
+    public ResponseResult deletedRecord(List<Long> ids) {
+        return null;
+    }
+
+    @Override
+    public PageVo<UserInfo> queryList(PageVo pageVo) {
+        return null;
     }
 }

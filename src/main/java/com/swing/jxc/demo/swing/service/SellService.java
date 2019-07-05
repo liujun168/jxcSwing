@@ -2,33 +2,25 @@ package com.swing.jxc.demo.swing.service;
 
 import com.swing.jxc.demo.swing.common.PageVo;
 import com.swing.jxc.demo.swing.common.ResponseResult;
-import com.swing.jxc.demo.swing.model.UserInfo;
+import com.swing.jxc.demo.swing.model.Sell;
 
 import java.util.List;
 
-public interface UserService {
-
-    /**
-     * 用户登录
-     * @param loginName
-     * @param password
-     * @return
-     */
-    UserInfo login(String loginName,String password);
+public interface SellService {
 
     /**
      * 添加记录
-     * @param user
+     * @param sell
      * @return
      */
-    ResponseResult addRecord(UserInfo user);
+    ResponseResult addRecord(Sell sell);
 
     /**
      * 修改记录
-     * @param user
+     * @param sell
      * @return
      */
-    ResponseResult updateRecord(UserInfo user);
+    ResponseResult updateRecord(Sell sell);
 
     /**
      * 删除机记录
@@ -42,5 +34,5 @@ public interface UserService {
      * @param pageVo
      * @return
      */
-    PageVo<UserInfo> queryList(PageVo pageVo);
+    List<Sell> queryList(PageVo pageVo);
 }
