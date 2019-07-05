@@ -5,6 +5,8 @@ import com.swing.jxc.demo.swing.model.UserInfo;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -18,6 +20,8 @@ public class MainSwing extends JFrame {
     // 得到显示器屏幕的宽高
     public static int width = Toolkit.getDefaultToolkit().getScreenSize().width;
     public static int height = Toolkit.getDefaultToolkit().getScreenSize().height;
+
+    JPanel mainPanel = new JPanel();
 
     JButton btn1 = new JButton("东");
     JButton btn2 = new JButton("南");
@@ -65,7 +69,6 @@ public class MainSwing extends JFrame {
         this.add(panel, BorderLayout.WEST);
         menuPanel(panel);
 //        this.add(btn1);
-        JPanel mainPanel = new JPanel();
         this.add(mainPanel);
         mainPanel(mainPanel);
     }
@@ -110,6 +113,12 @@ public class MainSwing extends JFrame {
         pNorth.add(item2);
         pNorth.add(item3);
         UserInfo user = (UserInfo) Session.session.get(Session.sessionId);
+        //TODO 用于测试
+        if(user == null){
+            user=new UserInfo();
+            user.setIsAdmin(true);
+        }
+
         if(user.getIsAdmin()){
             JButton item4 = new JButton("用户管理");
             item4.setPreferredSize(new Dimension(150, 30));
@@ -119,46 +128,22 @@ public class MainSwing extends JFrame {
 //        pNorth.add(item4); pNorth.add(item5); pNorth.add(item6);
 //        pNorth.add(item7);pNorth.add(item8);
 
+        item1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                new BuyJFrame(mainPanel);
+            }
+        });
+
     }
 
     void mainPanel(JPanel mainPanel) {
-
+//        JButton item1 = new JButton("机器管理");
+        new BuyJFrame(this);
+//        mainPanel.add(item1);
     }
 
     public static void main(String args[]) {
         new MainSwing();
     }
-}
-
-class MyMenu {
-    JFrame frame = new JFrame("右键菜单");
-    JMenuItem item1 = new JMenuItem("子菜单1", new ImageIcon("close.gif"));
-    JMenuItem item2 = new JMenuItem("子菜单2");
-    JMenuItem item3 = new JMenuItem("子菜单3");
-    JPopupMenu menu = new JPopupMenu();
-    JMenu m = new JMenu();
-    JPanel panel = new JPanel();
-
-    public MyMenu() {
-        menu.add(new JMenuItem("选择"));
-        menu.add(new JMenuItem("退出"));
-        m.add(item1);
-        m.add(item2);
-        menu.add(m);
-        menu.add(item3);
-        panel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (e.isPopupTrigger()) {
-                    menu.show(panel, e.getX(), e.getY());
-                }
-            }
-        });
-
-        panel.add(menu);
-        frame.add(panel);
-        frame.setSize(300, 300);
-        frame.setVisible(true);
-    }
-
 }
