@@ -78,6 +78,7 @@ public class MainSwing extends JFrame {
      * 左侧菜单
      * @param pNorth
      */
+    JButton item4 = null;
     void menuPanel(JPanel pNorth) {
 //        JPanel pNorth=new JPanel();
 //        pNorth.setLayout(new GridLayout(8,1));
@@ -109,7 +110,7 @@ public class MainSwing extends JFrame {
 //        item7.setPreferredSize(new Dimension(150, 47));
 //        item7.setPreferredSize(new Dimension(150, 47));
 //        item8.setPreferredSize(new Dimension(150, 47));
-        item1.setContentAreaFilled(false);
+        item1.setContentAreaFilled(true);
         item.setContentAreaFilled(false);
         item2.setContentAreaFilled(false);   //设置为透明
         item3.setContentAreaFilled(false);
@@ -124,12 +125,14 @@ public class MainSwing extends JFrame {
         UserInfo user = (UserInfo) Session.session.get(Session.sessionId);
         //TODO 用于测试
         if(user == null){
-            user=new UserInfo();
-            user.setIsAdmin(true);
+//            user=new UserInfo();
+//            user.setIsAdmin(true);
+            LoginSwingExample login = new LoginSwingExample();
+            login.createView();
         }
 
         if(user.getIsAdmin()){
-            JButton item4 = new JButton("用户管理");
+            item4 = new JButton("用户管理");
             item4.setPreferredSize(new Dimension(150, 30));
             item4.setContentAreaFilled(false);
             pNorth.add(item4);
@@ -137,6 +140,14 @@ public class MainSwing extends JFrame {
             item4.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    //按钮点击事件
+                    item1.setContentAreaFilled(false);
+                    item2.setContentAreaFilled(false);   //设置为透明
+                    item3.setContentAreaFilled(false);
+                    item.setContentAreaFilled(false);
+                    if(item4 !=null){
+                        item4.setContentAreaFilled(true);
+                    }
                     UserJFrame userJFrame = new UserJFrame();
                     //重新绘图
                     mainPanel.removeAll();
@@ -153,6 +164,15 @@ public class MainSwing extends JFrame {
         item1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //按钮点击事件
+                item1.setContentAreaFilled(true);
+                item2.setContentAreaFilled(false);   //设置为透明
+                item3.setContentAreaFilled(false);
+                item.setContentAreaFilled(false);
+                if(item4 !=null){
+                    item4.setContentAreaFilled(false);
+                }
+
                 MachineJFrame machineJFrame = new MachineJFrame();
                 //重新绘图
                 mainPanel.removeAll();
@@ -165,6 +185,15 @@ public class MainSwing extends JFrame {
         item.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //按钮点击事件
+                item.setContentAreaFilled(true);
+                item1.setContentAreaFilled(false);
+                item2.setContentAreaFilled(false);   //设置为透明
+                item3.setContentAreaFilled(false);
+                if(item4 !=null){
+                    item4.setContentAreaFilled(false);
+                }
+
                 StockJFrame stockFrame = new StockJFrame();
                 //重新绘图
                 mainPanel.removeAll();
@@ -177,6 +206,14 @@ public class MainSwing extends JFrame {
         item2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //按钮点击事件
+                item1.setContentAreaFilled(false);
+                item2.setContentAreaFilled(true);   //设置为透明
+                item3.setContentAreaFilled(false);
+                item.setContentAreaFilled(false);
+                if(item4 !=null){
+                    item4.setContentAreaFilled(false);
+                }
                 BuyJFrame buyJFrame = new BuyJFrame();
                 //重新绘图
                 mainPanel.removeAll();
@@ -189,6 +226,14 @@ public class MainSwing extends JFrame {
         item3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //按钮点击事件
+                item1.setContentAreaFilled(false);
+                item2.setContentAreaFilled(false);   //设置为透明
+                item3.setContentAreaFilled(true);
+                item.setContentAreaFilled(false);
+                if(item4 !=null){
+                    item4.setContentAreaFilled(false);
+                }
                 SellJFrame sellJFrame = new SellJFrame();
                 //重新绘图
                 mainPanel.removeAll();

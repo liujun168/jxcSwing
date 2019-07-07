@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -43,16 +44,18 @@ public class UserDialog extends JDialog{
         setSize(400,400);
         inputPanel.add(new JLabel("用户名:"));
         name = new JTextField();
-        name.setColumns(10);
+        name.setColumns(15);
+        inputPanel.add(name);
+//        name.setPreferredSize((new Dimension(100, 50)));
         inputPanel.add(new JLabel("登录名:"));
         loginName = new JTextField();
-        loginName.setColumns(10);
-        inputPanel.add(name);
+        loginName.setColumns(15);
         inputPanel.add(loginName);
         password = new JPasswordField();
-        password.setColumns(10);
-        inputPanel.add(new JLabel("Password:"));
+        password.setColumns(15);
+        inputPanel.add(new JLabel("密码:"));
         inputPanel.add(password);
+//        inputPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 //        inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
 //        inputPanel.setBorder(BorderFactory.createEmptyBorder(100, 50, 100, 50));
         //构造buttonPanel
@@ -67,7 +70,6 @@ public class UserDialog extends JDialog{
                     user.setLoginName(loginName.getText());
                     user.setPassword(MD5Util.md5(password.getText()));
                     ResponseResult responseResult = userService.addRecord(user);
-                    System.out.println(responseResult.toString());
 
                     UserJFrame userJFrame = new UserJFrame();
                     //重新绘图
@@ -84,7 +86,7 @@ public class UserDialog extends JDialog{
 //                }
 //                isLogedIn = true;
                 setVisible(false);
-//                setDefaultCloseOperation(EXIT_ON_CLOSE);
+                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             }
         });
         cancelButton = new JButton("取消");
@@ -93,7 +95,7 @@ public class UserDialog extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
                 setVisible(false);
-                setDefaultCloseOperation(EXIT_ON_CLOSE);
+                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             }
         });
         buttonPanel.add(okButton);
@@ -103,8 +105,9 @@ public class UserDialog extends JDialog{
         setLayout(new BorderLayout());
         getContentPane().add(inputPanel, BorderLayout.NORTH);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         //设置窗体属性
-        setTitle("设备添加");
+        setTitle("用户添加");
         setLocationRelativeTo(inputPanel);
         //setPreferredSize(new Dimension(300, 200));
         pack();
@@ -119,7 +122,13 @@ public class UserDialog extends JDialog{
 //    public boolean isLogedIn(){
 //        return isLogedIn;
 //    }
-//    public static void main(String[] args) {
-//        // TODO Auto-generated method stub
-//    }
+    public static void main(String[] args) {
+        JFrame jFrame = new JFrame();
+        JPanel mainPanel=new JPanel();
+        Map<String,Object> parameter = new HashMap<>();
+        parameter.put(Constant.operationType,Constant.add);
+        UserDialog machine = new UserDialog(jFrame,parameter,mainPanel);
+        machine.setVisible(true);
+        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
 }

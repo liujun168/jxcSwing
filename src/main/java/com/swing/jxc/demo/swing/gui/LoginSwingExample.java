@@ -6,18 +6,20 @@ import com.swing.jxc.demo.swing.model.UserInfo;
 import com.swing.jxc.demo.swing.service.UserService;
 import com.swing.jxc.demo.swing.service.impl.UserServiceImpl;
 import com.swing.jxc.demo.swing.utils.MD5Util;
+import org.springframework.util.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 /**
  * @description: Swing登录
  * @author: liujun 249489478@qq.com
  * @create: 2019-07-04 12:17
  */
-public class SwingLoginExample extends JFrame {
+public class LoginSwingExample extends JFrame {
     // 得到显示器屏幕的宽高
     public static int width = Toolkit.getDefaultToolkit().getScreenSize().width;
     public static int height = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -33,7 +35,7 @@ public class SwingLoginExample extends JFrame {
     /**
      * 创建GUI视图
      */
-    public static void createView() {
+    public void createView() {
         // 创建 JFrame 实例
         JFrame frame = new JFrame("Login Example");
 
@@ -60,7 +62,7 @@ public class SwingLoginExample extends JFrame {
                 (height - windowsHeight) / 2, windowsWedth, windowsHeight);
     }
 
-    private static void placeComponents(JPanel panel, JFrame frame) {
+    private void placeComponents(JPanel panel, JFrame frame) {
 
         /* 布局部分我们这边不多做介绍
          * 这边设置布局为 null
@@ -99,24 +101,62 @@ public class SwingLoginExample extends JFrame {
         passwordText.setBounds(240, 110, 165, 25);
         panel.add(passwordText);
         // 创建登录按钮
-        JButton loginButton = new JButton("login");
+        JButton loginButton = new JButton("登录");
+        JButton exitButton = new JButton("取消");
 //        loginButton.setBounds(10, 80, 80, 25);
         loginButton.setBounds(220, 180, 80, 25);
+        exitButton.setBounds(310, 180, 80, 25);
+
+        //注冊回车键事件
+        loginButton.registerKeyboardAction(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               //输入值为空
+               if(!checkValue()){
+                   return;
+               }
+               Boolean isLogin = getLoginData();
+               if(isLogin){
+                   frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                   frame.setVisible(false);
+                   new MainSwing();
+               }else{
+                   JOptionPane.showMessageDialog(LoginSwingExample.this, "用户名或密码错误!请重新登录");
+               }
+           }
+       } , KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //输入值为空
+                if(!checkValue()){
+                    return;
+                }
 //                JOptionPane.showMessageDialog(Main.this, "You click button is " + name);
-                getLoginData();
+                Boolean isLogin = getLoginData();
+                if(isLogin){
 //                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame.setVisible(false);
-                new MainSwing();
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame.setVisible(false);
+                    new MainSwing();
+                }else{
+                    JOptionPane.showMessageDialog(LoginSwingExample.this, "用户名或密码错误!请重新登录");
+//                    JOptionPane.showMessageDialog(null, "警告","提示",JOptionPane.WARNING_MESSAGE);
+//                    JOptionPane.showMessageDialog(null, "警告","提示",JOptionPane.YES_NO_CANCEL_OPTION);
+                }
+            }
+        });
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
         panel.add(loginButton);
+        panel.add(exitButton);
     }
 
-    private static void getLoginData() {
+    private static Boolean getLoginData() {
         String userName = userText.getText();
         System.out.println(userName);
         String pwd = passwordText.getText();
@@ -124,12 +164,34 @@ public class SwingLoginExample extends JFrame {
         String md5 = MD5Util.md5(pwd);
         System.out.println(md5);
         UserService userService = new UserServiceImpl();
-        UserInfo admin = userService.login("admin", MD5Util.md5("123456"));
-        Session.session.put(Session.sessionId,admin);
-        System.out.println(admin.toString());
+
+        UserInfo user = userService.login(userName, md5);
+        Session.session.put(Session.sessionId,user);
+        if(user != null){
+            return true;
+        }
+        return false;
     }
 
+    /**
+     * 校验输入值是否为空
+     * @return
+     */
+    public boolean checkValue(){
+        String userName = userText.getText();
+        if(StringUtils.isEmpty(userName)){
+            JOptionPane.showMessageDialog(LoginSwingExample.this, "用户名错误!请重新登录");
+            return false;
+        }
+        String pwd = passwordText.getText();
+        if(StringUtils.isEmpty(pwd)){
+            JOptionPane.showMessageDialog(LoginSwingExample.this, "密码错误!请重新登录");
+            return false;
+        }
+        return true;
+    }
     public static void main(String[] args) {
-        createView();
+        LoginSwingExample login = new LoginSwingExample();
+        login.createView();
     }
 }

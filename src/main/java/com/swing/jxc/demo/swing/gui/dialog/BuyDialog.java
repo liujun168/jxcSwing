@@ -79,7 +79,6 @@ public class BuyDialog extends JDialog{
                     buy.setModel(item.getKey().toString());
                     buy.setAmount(Long.valueOf(count.getText()));
                     ResponseResult responseResult = machineService.addRecord(buy);
-                    System.out.println(responseResult.toString());
 
                     BuyJFrame buyJFrame = new BuyJFrame();
                     //重新绘图
@@ -96,7 +95,7 @@ public class BuyDialog extends JDialog{
                 }
 //                isLogedIn = true;
                 setVisible(false);
-//                setDefaultCloseOperation(EXIT_ON_CLOSE);
+                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             }
         });
         cancelButton = new JButton("取消");
@@ -105,7 +104,7 @@ public class BuyDialog extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
                 setVisible(false);
-                setDefaultCloseOperation(EXIT_ON_CLOSE);
+                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             }
         });
         buttonPanel.add(okButton);

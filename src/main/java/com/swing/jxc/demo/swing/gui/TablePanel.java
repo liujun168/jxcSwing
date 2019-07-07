@@ -204,8 +204,8 @@ public class TablePanel extends JFrame implements ActionListener {
             Map<String,Object> parameter = new HashMap<>();
             parameter.put(Constant.operationType,Constant.add);
             if("user".equals(type)){
-                UserDialog machine = new UserDialog(this,parameter,mainPanel);
-                machine.setVisible(true);
+                UserDialog user = new UserDialog(this,parameter,mainPanel);
+                user.setVisible(true);
             }else if("sell".equals(type)){
                 SellDialog sell = new SellDialog(this,parameter,mainPanel);
                 sell.setVisible(true);

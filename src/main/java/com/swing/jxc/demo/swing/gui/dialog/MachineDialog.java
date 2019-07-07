@@ -59,7 +59,6 @@ public class MachineDialog extends JDialog{
                     Machine machine = new Machine();
                     machine.setName(name.getText());
                     ResponseResult responseResult = machineService.addMachine(machine);
-                    System.out.println(responseResult.toString());
 
                     MachineJFrame machineJFrame = new MachineJFrame();
                     //重新绘图
@@ -76,7 +75,7 @@ public class MachineDialog extends JDialog{
                 }
 //                isLogedIn = true;
                 setVisible(false);
-//                setDefaultCloseOperation(EXIT_ON_CLOSE);
+                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             }
         });
         cancelButton = new JButton("取消");
@@ -85,7 +84,7 @@ public class MachineDialog extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
                 setVisible(false);
-                setDefaultCloseOperation(EXIT_ON_CLOSE);
+                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             }
         });
         buttonPanel.add(okButton);

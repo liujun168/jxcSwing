@@ -77,7 +77,6 @@ public class SellDialog extends JDialog{
                     sell.setModel(item.getKey().toString());
                     sell.setAmount(Long.valueOf(count.getText()));
                     ResponseResult responseResult = sellService.addRecord(sell);
-                    System.out.println(responseResult.toString());
                     SellJFrame sellJFrame = new SellJFrame();
                     //重新绘图
                     mainPanel.removeAll();
@@ -93,7 +92,7 @@ public class SellDialog extends JDialog{
                 }
 //                isLogedIn = true;
                 setVisible(false);
-//                setDefaultCloseOperation(EXIT_ON_CLOSE);
+                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             }
         });
         cancelButton = new JButton("取消");
@@ -102,7 +101,7 @@ public class SellDialog extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
                 setVisible(false);
-                setDefaultCloseOperation(EXIT_ON_CLOSE);
+                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             }
         });
         buttonPanel.add(okButton);

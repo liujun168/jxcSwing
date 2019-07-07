@@ -11,7 +11,6 @@ import com.swing.jxc.demo.swing.model.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -241,10 +240,10 @@ public class TablePage<T> extends JTable {
 //        mainPanel.add(this, BorderLayout.CENTER);
 
         //隐藏第一列
-        TableColumn tc=this.getColumnModel().getColumn(0);
-        tc.setMaxWidth(0);
-        tc.setMinWidth(0);
-        tc.setPreferredWidth(0);
+//        TableColumn tc=this.getColumnModel().getColumn(0);
+//        tc.setMaxWidth(0);
+//        tc.setMinWidth(0);
+//        tc.setPreferredWidth(0);
 //        tc.setResizable(false);
 //        this.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0); //设置表的标题的宽度也为0,这个很重要
 //        this.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
