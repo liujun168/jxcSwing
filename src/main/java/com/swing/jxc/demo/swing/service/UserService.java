@@ -32,15 +32,15 @@ public interface UserService {
 
     /**
      * 删除机记录
-     * @param ids
+     * @param id
      * @return
      */
-    ResponseResult deletedRecord(List<Long> ids);
+    ResponseResult deletedRecord(Long id);
 
     /**
      * 查询数据
      * @param pageVo
      * @return
      */
-    PageVo<UserInfo> queryList(PageVo pageVo);
+    List<UserInfo> queryList(PageVo pageVo);
 }

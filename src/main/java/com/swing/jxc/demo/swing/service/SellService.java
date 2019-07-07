@@ -24,10 +24,10 @@ public interface SellService {
 
     /**
      * 删除机记录
-     * @param ids
+     * @param id
      * @return
      */
-    ResponseResult deletedRecord(List<Long> ids);
+    ResponseResult deletedRecord(Long id);
 
     /**
      * 查询数据

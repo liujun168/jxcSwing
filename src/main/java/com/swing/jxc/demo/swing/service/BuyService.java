@@ -5,7 +5,6 @@ import com.swing.jxc.demo.swing.common.ResponseResult;
 import com.swing.jxc.demo.swing.model.Buy;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @description: 进货接口
@@ -30,10 +29,10 @@ public interface BuyService {
 
     /**
      * 删除机记录
-     * @param ids
+     * @param id
      * @return
      */
-    ResponseResult deletedRecord(List<Long> ids);
+    ResponseResult deletedRecord(Long id);
 
     /**
      * 查询数据

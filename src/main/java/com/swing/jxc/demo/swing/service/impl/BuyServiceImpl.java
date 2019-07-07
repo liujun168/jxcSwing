@@ -4,7 +4,6 @@ import com.swing.jxc.demo.swing.common.PageVo;
 import com.swing.jxc.demo.swing.common.ResponseResult;
 import com.swing.jxc.demo.swing.jdbc.MyDataSource;
 import com.swing.jxc.demo.swing.model.Buy;
-import com.swing.jxc.demo.swing.model.UserInfo;
 import com.swing.jxc.demo.swing.service.BuyService;
 
 import java.sql.Connection;
@@ -12,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @description: 进货service实现类
@@ -22,18 +20,94 @@ import java.util.Map;
 public class BuyServiceImpl implements BuyService {
     @Override
     public ResponseResult addRecord(Buy buy) {
-
-        return null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        //1.创建自定义连接池对象
+        MyDataSource dataSource = new MyDataSource();
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append("insert into buy(model,amount ");
+            sql.append(") values ");
+            sql.append("(?,?) ");
+            //2.从池子中获取连接
+            conn = dataSource.getConnection();
+            pstmt = conn.prepareStatement(sql.toString());
+            int index =1;
+            if(buy !=null){
+                pstmt.setString(index++, buy.getModel());
+                pstmt.setLong(index++, buy.getAmount());
+            }
+            int num = pstmt.executeUpdate();
+            if(num >0){
+                return ResponseResult.success();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } finally {
+            dataSource.backConnection(conn);
+        }
+        return ResponseResult.error();
     }
 
     @Override
     public ResponseResult updateRecord(Buy buy) {
-        return null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        //1.创建自定义连接池对象
+        MyDataSource dataSource = new MyDataSource();
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append("update buy set model=?,amount =?");
+            sql.append("where id=?");
+            //2.从池子中获取连接
+            conn = dataSource.getConnection();
+            pstmt = conn.prepareStatement(sql.toString());
+            int index =1;
+            if(buy !=null){
+                pstmt.setString(index++, buy.getModel());
+                pstmt.setLong(index++, buy.getAmount());
+                pstmt.setLong(index++, buy.getId());
+            }
+            int num = pstmt.executeUpdate();
+            if(num >0){
+                return ResponseResult.success();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } finally {
+            dataSource.backConnection(conn);
+        }
+        return ResponseResult.error();
     }
 
     @Override
-    public ResponseResult deletedRecord(List<Long> ids) {
-        return null;
+    public ResponseResult deletedRecord(Long id) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        //1.创建自定义连接池对象
+        MyDataSource dataSource = new MyDataSource();
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append("delete from buy where id=? ");
+            //2.从池子中获取连接
+            conn = dataSource.getConnection();
+            pstmt = conn.prepareStatement(sql.toString());
+            if(id !=null){
+                pstmt.setLong(1, id);
+            }
+            int num = pstmt.executeUpdate();
+            if(num >0){
+                return ResponseResult.success();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } finally {
+            dataSource.backConnection(conn);
+        }
+        return ResponseResult.error();
     }
 
     @Override

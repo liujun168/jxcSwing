@@ -24,21 +24,22 @@ public interface MachineService {
 
     /**
      * 删除机器型号
-     * @param ids
+     * @param id
      * @return
      */
-    ResponseResult deleteMachine(List<Long> ids);
+    ResponseResult deleteMachine(Long id);
 
     /**
      * 查询数据
      * @param pageVo
      * @return
      */
-    PageVo<Machine> queryList(PageVo pageVo);
+    List<Machine> queryList(PageVo pageVo);
 
     /**
      * 查询所有设备型号
+     * @param pageVo
      * @return
      */
-    List<Machine> queryAll();
+    List<Machine> queryAll(PageVo pageVo);
 }

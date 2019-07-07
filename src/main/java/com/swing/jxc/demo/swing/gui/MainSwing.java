@@ -3,14 +3,11 @@ package com.swing.jxc.demo.swing.gui;
 import com.swing.jxc.demo.swing.common.Constant;
 import com.swing.jxc.demo.swing.common.Session;
 import com.swing.jxc.demo.swing.model.UserInfo;
-import com.swing.jxc.demo.swing.utils.TablePage;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * @description: 主界面
@@ -35,7 +32,7 @@ public class MainSwing extends JFrame {
     MainSwing() {
 //        init();
         initView();
-        this.setTitle("边界布局");
+        this.setTitle("进销存管理");
         this.setResizable(true);
         if (width > 100) {
             width = width - 100;
@@ -74,9 +71,13 @@ public class MainSwing extends JFrame {
         int panelHeight = height-150;
         Constant.panelWidth=panelWidth;
         Constant.panelHeight=panelHeight;
-        mainPanel(mainPanel);
+        initMainPanel(mainPanel);
     }
 
+    /**
+     * 左侧菜单
+     * @param pNorth
+     */
     void menuPanel(JPanel pNorth) {
 //        JPanel pNorth=new JPanel();
 //        pNorth.setLayout(new GridLayout(8,1));
@@ -89,6 +90,7 @@ public class MainSwing extends JFrame {
 //        subMenuContainer.setLayout(new GridLayout(4,1));
 
         JButton item1 = new JButton("设备管理");              //设置按钮
+        JButton item = new JButton("库存管理");
         JButton item2 = new JButton("进货管理");
         JButton item3 = new JButton("出货管理");
 //        System.out.println("here:"+user.toString());
@@ -97,6 +99,7 @@ public class MainSwing extends JFrame {
 //        JButton item6=new JButton("价格管理");
 //        JButton item7=new JButton("收费管理");
 //        JButton item8=new JButton("系统设置");
+        item.setPreferredSize(new Dimension(150, 30));
         item1.setPreferredSize(new Dimension(150, 30));   //优先设置按钮大小
         item2.setPreferredSize(new Dimension(150, 30));
         item3.setPreferredSize(new Dimension(150, 30));
@@ -107,6 +110,7 @@ public class MainSwing extends JFrame {
 //        item7.setPreferredSize(new Dimension(150, 47));
 //        item8.setPreferredSize(new Dimension(150, 47));
         item1.setContentAreaFilled(false);
+        item.setContentAreaFilled(false);
         item2.setContentAreaFilled(false);   //设置为透明
         item3.setContentAreaFilled(false);
 //        item4.setContentAreaFilled(false);
@@ -114,6 +118,7 @@ public class MainSwing extends JFrame {
 //        item7.setContentAreaFilled(false);item8.setContentAreaFilled(false);
 
         pNorth.add(item1);
+        pNorth.add(item);
         pNorth.add(item2);
         pNorth.add(item3);
         UserInfo user = (UserInfo) Session.session.get(Session.sessionId);
@@ -128,6 +133,18 @@ public class MainSwing extends JFrame {
             item4.setPreferredSize(new Dimension(150, 30));
             item4.setContentAreaFilled(false);
             pNorth.add(item4);
+            //用户管理
+            item4.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    UserJFrame userJFrame = new UserJFrame();
+                    //重新绘图
+                    mainPanel.removeAll();
+                    mainPanel.repaint();
+                    mainPanel.revalidate();
+                    userJFrame.initView(mainPanel);
+                }
+            });
         }//添加按钮
 //        pNorth.add(item4); pNorth.add(item5); pNorth.add(item6);
 //        pNorth.add(item7);pNorth.add(item8);
@@ -136,12 +153,24 @@ public class MainSwing extends JFrame {
         item1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                BuyJFrame buyJFrame = new BuyJFrame();
+                MachineJFrame machineJFrame = new MachineJFrame();
                 //重新绘图
                 mainPanel.removeAll();
                 mainPanel.repaint();
                 mainPanel.revalidate();
-                buyJFrame.initView(mainPanel);
+                machineJFrame.initView(mainPanel);
+            }
+        });
+        //库存管理
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StockJFrame stockFrame = new StockJFrame();
+                //重新绘图
+                mainPanel.removeAll();
+                mainPanel.repaint();
+                mainPanel.revalidate();
+                stockFrame.initView(mainPanel);
             }
         });
         //进货管理
@@ -171,10 +200,14 @@ public class MainSwing extends JFrame {
 
     }
 
-    void mainPanel(JPanel mainPanel) {
-//        JButton item1 = new JButton("机器管理");
-        BuyJFrame buyJFrame = new BuyJFrame();
-        buyJFrame.initView(mainPanel);
+    /**
+     * 初始化加载右侧内容
+     * @param mainPanel
+     */
+    void initMainPanel(JPanel mainPanel) {
+//        BuyJFrame jFrame = new BuyJFrame();
+        MachineJFrame jFrame = new MachineJFrame();
+        jFrame.initView(mainPanel);
 //        mainPanel.add(item1);
 //        initComponent(mainPanel,new String[]{"设备","库存"});
     }
